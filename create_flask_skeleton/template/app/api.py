@@ -62,7 +62,9 @@ class ApiFlask(Flask):
         if isinstance(rv, (dict, list)):
             rv = ApiResult(rv)
         if isinstance(rv, ApiResult):
-            return rv.to_response()
-        response = super(ApiFlask, self).make_response(rv)
+            response = rv.to_response()
+        else:
+            response = super().make_response(rv)
         append_cors_header(response)
         return response
+
