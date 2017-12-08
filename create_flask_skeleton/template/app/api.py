@@ -23,7 +23,7 @@ class ApiException(Exception):
     errors = None
     status = 400
 
-    def __init__(self, message, status=None, *, code=None, errors=None):
+    def __init__(self, message, status=None,  code=None, errors=None):
         self.message = message
         self.status = status or self.status
         self.code = code or self.code
@@ -63,6 +63,6 @@ class ApiFlask(Flask):
             rv = ApiResult(rv)
         if isinstance(rv, ApiResult):
             return rv.to_response()
-        response = super().make_response(rv)
+        response = super(ApiFlask, self).make_response(rv)
         append_cors_header(response)
         return response

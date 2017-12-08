@@ -1,7 +1,8 @@
 from setuptools import setup
+from create_flask_skeleton import __version__
 
 setup(
-    version='0.0.1',
+    version=__version__,
     name='create-flask-skeleton',
     packages=['create_flask_skeleton'],
     include_package_data=True,

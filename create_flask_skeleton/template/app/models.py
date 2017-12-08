@@ -1,6 +1,8 @@
+from __future__ import print_function
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+
 
 Base = declarative_base()
 

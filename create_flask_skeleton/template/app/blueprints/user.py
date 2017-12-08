@@ -13,8 +13,6 @@ bp = Blueprint('{{ app }}', __name__)
 @bp.route('/')
 def index():
     users = list(User.query.all())
-    print(bool(users))
-    print(users)
     return 'flask app with sqlalchemy {}'.format("<br/>".join(_.name for _ in users))
 
 
