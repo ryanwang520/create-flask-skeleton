@@ -21,16 +21,6 @@ def main(version, two, name):
     bootstrap(name, version=2 if two else 3)
 
 
-class File:
-    def __init__(self, dir_path, file_name):
-        self.dir_path = dir_path
-        self.file_name = file_name
-
-    @property
-    def path(self):
-        return os.path.join(self.dir_path, self.file_name)
-
-
 def mkdirs(name, dir_paths):
     if os.path.exists(name):
         click.echo('The directory {} already exists, try using a new directory name'.format(name))
