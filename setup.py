@@ -6,9 +6,9 @@ setup(
     packages=['create_flask_skeleton'],
     include_package_data=True,
     install_requires=[
-        'flask',
-        'pyjwt',
-        'pyyaml'
+        'pyyaml',
+        'jinja2',
+        'click',
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],

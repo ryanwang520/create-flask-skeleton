@@ -1,6 +1,5 @@
 import click
 import os
-from os.path import join, getsize
 import shutil
 from jinja2 import Template
 

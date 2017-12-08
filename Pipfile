@@ -9,6 +9,7 @@ name = "pypi"
 
 click = "*"
 "jinja2" = "*"
+pyyaml = "*"
 
 
 [dev-packages]
