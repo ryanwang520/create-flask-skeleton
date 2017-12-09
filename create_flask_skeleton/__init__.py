@@ -7,7 +7,7 @@ from jinja2 import Template
 
 TEMPLATE_NAME = 'app'
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 
 @click.command()
@@ -18,6 +18,9 @@ def main(version, two, name):
     if version:
         click.echo('version {}'.format(__version__))
         return
+    if not name:
+        click.echo('please give a project name')
+        sys.exit(2)
     bootstrap(name, version=2 if two else 3)
 
 
