@@ -1,13 +1,15 @@
 from contextlib import contextmanager
 
-import click
+import re
 import os
 import sys
+
+import click
 from jinja2 import Template
 
 TEMPLATE_NAME = 'app'
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 
 @click.command()
@@ -30,24 +32,26 @@ def mkdirs(name, dir_paths):
         sys.exit(1)
     root_dir = os.path.join(os.getcwd(), name)
     os.mkdir(root_dir)
+    package_name = get_package_name(name)
 
     for dir_path in dir_paths:
         if dir_path.startswith(TEMPLATE_NAME):
-            dir_path = name + dir_path[len(TEMPLATE_NAME):]
+            dir_path = package_name + dir_path[len(TEMPLATE_NAME):]
         path = os.path.join(os.getcwd(), name, dir_path)
         os.mkdir(path)
 
 
 def copy_files(name, file_paths, template_path):
+    package_name = get_package_name(name)
     for file_path in file_paths:
         relative_path = file_path.replace(template_path + '/', '')
         if relative_path.startswith(TEMPLATE_NAME):
-            relative_path = name + relative_path[len(TEMPLATE_NAME):]
+            relative_path = package_name + relative_path[len(TEMPLATE_NAME):]
         dest = os.path.join(os.getcwd(), name, relative_path)
 
         if file_path.endswith('.pyc'):
             continue
-        content = replace_template(name, file_path)
+        content = replace_template(package_name, file_path)
         with open(dest, 'w') as f:
             f.write(content)
 
@@ -82,7 +86,15 @@ def install_packages(name, version):
     click.echo("cd to {} directory and run pipenv run flask run to start development".format(name))
 
 
+package_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_\-]+$')
+
+get_package_name = lambda name: name.replace('-', '_')
+
+
 def bootstrap(name, version):
+    if not package_pattern.match(name):
+        click.echo('can not create package based on name {}'.format(name))
+        sys.exit(2)
     templates_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'template'))
     dir_paths = []
     file_paths = []
