@@ -83,7 +83,9 @@ def install_packages(name, version):
             os.system('pipenv --two')
         os.system("pipenv install")
     click.echo("install requirements successfully")
-    click.echo("cd to {} directory and run pipenv run flask run to start development".format(name))
+    click.echo("cd to {} directory and run pipenv run flask run to start development,"
+               " you may need to run flask run initdb to get a initial sqlite database setup"
+               "".format(name))
 
 
 package_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_\-]+$')
