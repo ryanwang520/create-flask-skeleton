@@ -9,7 +9,7 @@ from jinja2 import Template
 
 TEMPLATE_NAME = 'app'
 
-__version__ = '0.0.4'
+__version__ = '0.0.6'
 
 
 @click.command()
@@ -83,8 +83,8 @@ def install_packages(name, version):
             os.system('pipenv --two')
         os.system("pipenv install")
     click.echo("install requirements successfully")
-    click.echo("cd to {} directory and run pipenv run flask run to start development,"
-               " you may need to run flask run initdb to get a initial sqlite database setup"
+    click.echo("cd to {} directory and run `pipenv run flask run` to start development,"
+               " you may need to run `pipenv run flask run` initdb to get a initial sqlite database setup"
                "".format(name))
 
 

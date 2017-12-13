@@ -12,6 +12,10 @@ bp = Blueprint('{{ app }}', __name__)
 
 @bp.route('/')
 def index():
+    return 'welcome to flask world!'
+
+@bp.route('/db')
+def db():
     users = list(User.query.all())
     return 'flask app with sqlalchemy {}'.format("<br/>".join(_.name for _ in users))
 
