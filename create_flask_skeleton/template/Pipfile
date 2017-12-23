@@ -7,7 +7,7 @@ name = "pypi"
 
 [packages]
 
-flask = {git = "https://github.com/pallets/flask.git", ref = "d08d96acbcabcde23307ed060f71f95ba9cb7b8d"}
+flask = "*"
 sqlalchemy = "*"
 voluptuous = "*"
 pyyaml = "*"

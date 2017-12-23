@@ -9,7 +9,7 @@ from jinja2 import Template
 
 TEMPLATE_NAME = 'app'
 
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 
 
 @click.command()
@@ -28,7 +28,8 @@ def main(version, two, name):
 
 def mkdirs(name, dir_paths):
     if os.path.exists(name):
-        click.echo('The directory {} already exists, try using a new directory name'.format(name))
+        click.echo(
+            'The directory {} already exists, try using a new directory name'.format(name))
         sys.exit(1)
     root_dir = os.path.join(os.getcwd(), name)
     os.mkdir(root_dir)
@@ -90,14 +91,16 @@ def install_packages(name, version):
 
 package_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_\-]+$')
 
-get_package_name = lambda name: name.replace('-', '_')
+
+def get_package_name(name): return name.replace('-', '_')
 
 
 def bootstrap(name, version):
     if not package_pattern.match(name):
         click.echo('can not create package based on name {}'.format(name))
         sys.exit(2)
-    templates_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'template'))
+    templates_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), 'template'))
     dir_paths = []
     file_paths = []
     for root, dirs, files in os.walk(templates_path):

@@ -23,7 +23,7 @@ init for an flask app with my opinioned understanding
 
 1. add APP_SETTINGS={your actual yaml config path}  to your .env file, APP_SETTINGS=config.yaml is a good default choice.
 
-2. add `FLASK_APP={{ app }}.factory:create_app()` and `FLASK_DEBUG=1`  to your .env file
+2. add `FLASK_APP={{ app }}.main:app` and `FLASK_DEBUG=1`  to your .env file
 
 3. flask initdb
 
