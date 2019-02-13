@@ -1,12 +1,12 @@
-import jwt
-from flask import Blueprint, current_app, request
+from flask import Blueprint, request
 
-from {{ app }}.api import dataschema
-from {{ app }}.auth import check_auth, ALGORITHMS
-from {{ app }}.consts import AUD_ADMIN
-from {{ app }}.models import User
+from ..auth import check_auth, encode_jwt
+from ..api import dataschema
+from ..models import User
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
+
+AUD_ADMIN = 'AUD_ADMIN'
 
 
 @bp.before_request
@@ -34,9 +34,7 @@ def users():
 })
 def login(name):
     user = User.query.filter_by(name=name).one()
-    token = jwt.encode({'id': user.id, 'aud': AUD_ADMIN},
-                       current_app.secret_key,
-                       algorithm=ALGORITHMS[0])
+    token = encode_jwt({'id': user.id}, AUD_ADMIN)
     return {
         'token': token.decode('utf-8'),
         'user': {

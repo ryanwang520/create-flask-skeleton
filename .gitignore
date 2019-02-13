@@ -98,3 +98,4 @@ ENV/
 .mypy_cache/
 .idea
 config.yaml
+sample

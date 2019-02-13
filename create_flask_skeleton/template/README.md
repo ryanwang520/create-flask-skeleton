@@ -9,14 +9,14 @@ init for an flask app with my opinioned understanding
 4. sqalchemy integrated
 
 
-### install pipenv
+### install poetry
 
-    pip install pipenv
+    pip3 install poetry
 
 
 ### install requirements
 
-    pipenv install
+    poetry install
 
 ### running
 
@@ -25,12 +25,11 @@ init for an flask app with my opinioned understanding
 
 2. add `FLASK_APP={{ app }}.main:app` and `FLASK_DEBUG=1`  to your .env file
 
-3. flask initdb
+3. flask ishell
 
-4. pip install -e .
 
-5. python setup.py test
+5. poetry run pytest tests
 
-3. `pipenv run flask run` or `pipenv shell && flask run`
+3. `poetry run flask run` or `poetry shell && flask run`
 
 

@@ -1,11 +1,11 @@
-import jwt
-from flask import Blueprint, current_app
+import functools
 
-from {{ app }}.api import dataschema
-from {{ app }}.auth import requires_auth, ALGORITHMS
-from {{ app }}.consts import AUD_APP
-from {{ app }}.models import User
-from {{ app }}.auth import current_user
+from flask import Blueprint, g
+
+from ..auth import check_auth, encode_jwt
+from ..api import dataschema
+from ..models import User
+from ..globals import current_user
 
 bp = Blueprint('{{ app }}', __name__)
 
@@ -13,6 +13,7 @@ bp = Blueprint('{{ app }}', __name__)
 @bp.route('/')
 def index():
     return 'welcome to flask world!'
+
 
 @bp.route('/db')
 def db():
@@ -26,9 +27,7 @@ def db():
 })
 def login(name):
     user = User.query.filter_by(name=name).one()
-    token = jwt.encode({'id': user.id, 'aud': AUD_APP},
-                       current_app.secret_key,
-                       algorithm=ALGORITHMS[0])
+    token = encode_jwt({'id': user.id}, 'AUD_APP')
     return {
         'token': token.decode('utf-8'),
         'user': {
@@ -38,10 +37,22 @@ def login(name):
     }
 
 
+def auth_callback(payload):
+    user_id = payload["id"]
+    g.user = User.find_one(User.id == user_id)
+
+
+def login_required(fn):
+    functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        check_auth('AUD_APP', auth_callback)
+        return fn(*args, **kwargs)
+    return wrapper
+
 @bp.route('/profile')
-@requires_auth(AUD_APP)
+@login_required
 def profile():
-    return 'this is profile of {}'.format(current_user.name)
+    return 'this is profile of {}'.format(current_user().name)
 
 
 @bp.route('/test', methods=['POST'])
