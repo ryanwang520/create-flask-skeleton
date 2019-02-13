@@ -9,7 +9,7 @@ from jinja2 import Template
 
 TEMPLATE_NAME = 'app'
 
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 
 @click.command()
