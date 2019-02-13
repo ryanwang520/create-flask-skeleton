@@ -9,14 +9,14 @@ init for an flask app with my opinioned understanding
 4. sqalchemy integrated
 
 
-### install pipenv
+### install poetry
 
-    pip install pipenv
+    pip install poetry
 
 
 ### install requirements
 
-    pipenv install
+    poetry install
 
 ### running
 
@@ -31,6 +31,6 @@ init for an flask app with my opinioned understanding
 
 5. python setup.py test
 
-3. `pipenv run flask run` or `pipenv shell && flask run`
+3. `poetry run flask run` or `poetry shell && flask run`
 
 

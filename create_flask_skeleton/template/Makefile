@@ -1,7 +1,7 @@
 
 start:
-	pipenv run flask run
+	poetry run flask run
 
 
 flake8:
-	pipenv run flake8 app
+	poetry run flake8 app

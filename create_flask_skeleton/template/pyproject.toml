@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "{{ app }}"
+version = "0.1.0"
+description = ""
+authors = ["Ryan Wang <hwwangwang@gmail.com>"]
+include = ["{{ app }}/templates/", "{{ app }}/static/"]
+
+
+[tool.poetry.dependencies]
+flask = "^1.0"
+lazy_object_proxy = "^1.3"
+pyjwt = "^1.7"
+flask_sqlalchemy = "^2.3"
+flask_migrate = "^2.3"
+mypy_extensions = "^0.4.1"
+
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.6"
+black = {version = "^18.3-alpha.0",allows-prereleases = true}
+mypy = "^0.660"
+pytest = "^4.0"
+fabric = "^2.4"
+sqlalchemy-stubs = { git = "https://github.com/dropbox/sqlalchemy-stubs.git", branch = "master" }
+
+
+[tool.black]
+py36 = true
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+

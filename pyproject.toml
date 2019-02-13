@@ -13,11 +13,17 @@ jinja2 = "^2.10"
 click = "^7.0"
 
 [tool.poetry.dev-dependencies]
+flask = "^1.0"
+lazy_object_proxy = "^1.3"
+pyjwt = "^1.7"
+flask_sqlalchemy = "^2.3"
+flask_migrate = "^2.3"
+mypy_extensions = "^0.4.1"
+
+[tool.poetry.scripts]
+create-flask-skeleton = 'create_flask_skeleton:main'
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
-
-[tool.poetry.scripts]
-create-flask-skeleton = 'create_flask_skeleton:main'
 

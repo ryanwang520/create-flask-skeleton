@@ -78,14 +78,14 @@ def cd(newdir):
 
 def install_packages(name, version):
     with cd(name):
-        if os.system("pipenv > /dev/null 2>&1") != 0:
-            os.system("pip install pipenv")
-        if version == 2:
-            os.system('pipenv --two')
-        os.system("pipenv install")
+        if os.system("poetry > /dev/null 2>&1") != 0:
+            os.system("pip install poetry")
+        # if version == 2:
+        #     os.system('pipenv --two')
+        os.system("poetry install")
     click.echo("install requirements successfully")
-    click.echo("cd to {} directory and run `pipenv run flask run` to start development,"
-               " you may need to run `pipenv run flask run` initdb to get a initial sqlite database setup"
+    click.echo("cd to {} directory and run `poetry run flask run` to start development,"
+               " you may need to run `poetry run flask run` initdb to get a initial sqlite database setup"
                "".format(name))
 
 
