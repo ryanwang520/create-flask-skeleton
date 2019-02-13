@@ -1,5 +1,7 @@
 # create-flask-skeleton
 
+🔥 Quick bootstrap your flask project with highly opinoined presets.
+
 # only support python3.7 and above
 
 ## install from pypi

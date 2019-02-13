@@ -11,7 +11,7 @@ init for an flask app with my opinioned understanding
 
 ### install poetry
 
-    pip install poetry
+    pip3 install poetry
 
 
 ### install requirements
@@ -25,11 +25,10 @@ init for an flask app with my opinioned understanding
 
 2. add `FLASK_APP={{ app }}.main:app` and `FLASK_DEBUG=1`  to your .env file
 
-3. flask initdb
+3. flask ishell
 
-4. pip install -e .
 
-5. python setup.py test
+5. poetry run pytest tests
 
 3. `poetry run flask run` or `poetry shell && flask run`
 

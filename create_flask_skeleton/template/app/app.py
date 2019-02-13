@@ -1,9 +1,9 @@
+import importlib
 import os
 import yaml
 import logging
 import traceback
 from flask import request
-from werkzeug.utils import find_modules, import_string
 
 from .api import ApiException, ApiFlask
 from .globals import db, migrate
@@ -23,6 +23,7 @@ def create_app(config=None):
     register_blueprints(app)
     db.init_app(app)
     migrate.init_app(app)
+    init_shell(app)
 
     register_error_handlers(app)
     return app
@@ -37,15 +38,10 @@ def create_normal_app():
 
 
 def register_blueprints(app):
-    """Register all blueprint modules
-
-    Reference: Armin Ronacher, "Flask for Fun and for Profit" PyBay 2016.
-    """
-    for name in find_modules('{{ app }}.apps'):
-        mod = import_string(name)
-        if hasattr(mod, 'bp'):
-            app.register_blueprint(mod.bp)
-    return None
+    from .apps.admin import bp as admin
+    app.register_blueprint(admin)
+    from .apps.user import bp as user
+    app.register_blueprint(user)
 
 
 def register_error_handlers(app):
@@ -82,3 +78,32 @@ def register_error_handlers(app):
     app.register_error_handler(Exception, handle_err)
 
     app.register_error_handler(ApiException, lambda err: err.to_result())
+
+
+def init_shell(app):
+    @app.cli.command("ishell")
+    def shell():
+        # lazy import these modules as they are only used in the shell context
+        from IPython import embed, InteractiveShell
+        import cProfile
+        import pdb
+
+        main = importlib.import_module("__main__")
+
+        banner = f"App: poi"
+        from . import models
+
+        ctx = main.__dict__
+        ctx.update(
+            {
+                **models.__dict__,
+                "session": db.session,
+                "pdb": pdb,
+                "cProfile": cProfile,
+            }
+        )
+
+        with app.app_context():
+            ctx.update(app.make_shell_context())
+            InteractiveShell.colors = "Neutral"
+            embed(user_ns=ctx, banner2=banner)

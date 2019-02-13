@@ -1,3 +1,5 @@
+import functools
+
 from flask import Blueprint, g
 
 from ..auth import check_auth, encode_jwt
@@ -40,8 +42,15 @@ def auth_callback(payload):
     g.user = User.find_one(User.id == user_id)
 
 
+def login_required(fn):
+    functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        check_auth('AUD_APP', auth_callback)
+        return fn(*args, **kwargs)
+    return wrapper
+
 @bp.route('/profile')
-@check_auth('AUD_APP', auth_callback)
+@login_required
 def profile():
     return 'this is profile of {}'.format(current_user().name)
 

@@ -1,7 +1,6 @@
-from {{ app }}.factory import create_app
+from {{ app }}.app import create_app
 import pytest
 
-from {{ app }}.models import init_db
 
 
 @pytest.fixture(scope='module')
@@ -13,7 +12,7 @@ def app():
     app = create_app(config=config)
 
     with app.app_context():
-        init_db(app)
+        # init_db(app)
         yield app
 
 
