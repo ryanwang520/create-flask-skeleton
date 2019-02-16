@@ -24,7 +24,6 @@ pytest = "^4.2"
 flake8 = "^3.6"
 black = {version = "^18.3-alpha.0",allows-prereleases = true}
 mypy = "^0.660"
-pytest = "^4.0"
 fabric = "^2.4"
 sqlalchemy-stubs = { git = "https://github.com/dropbox/sqlalchemy-stubs.git", branch = "master" }
 
