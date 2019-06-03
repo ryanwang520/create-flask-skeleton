@@ -1,6 +1,6 @@
 # create-flask-skeleton
 
-🔥 Quick bootstrap your flask project with highly opinoined presets.
+🔥 Quick bootstrap your flask project with highly opinioned presets.
 
 # only support python3.7 and above
 
