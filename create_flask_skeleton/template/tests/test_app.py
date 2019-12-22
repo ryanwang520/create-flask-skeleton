@@ -2,11 +2,10 @@ from {{ app }}.app import create_app
 import pytest
 
 
-
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def app():
     config = {
-        'TESTING': True,
+        "TESTING": True,
     }
 
     app = create_app(config=config)
@@ -16,7 +15,7 @@ def app():
         yield app
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def client(request, app):
     client = app.test_client()
 
@@ -27,12 +26,12 @@ def client(request, app):
 
 
 def test_home(client):
-    rv = client.post('/test', json={'a': 12})
+    rv = client.post("/test", json={"a": 12})
     assert rv.is_json
-    assert rv.json['a'] == 12
+    assert rv.json["a"] == 12
 
 
 def test_home_bad(client):
-    rv = client.post('/test', json={'a': 'str'})
+    rv = client.post("/test", json={"a": "str"})
     assert rv.is_json
     assert rv.status_code == 400

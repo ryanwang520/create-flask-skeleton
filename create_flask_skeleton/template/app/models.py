@@ -8,7 +8,7 @@ Base = declarative_base()
 
 
 class User(Model):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String(50), unique=True)
     email = sa.Column(sa.String(120), unique=True)
@@ -19,7 +19,4 @@ class User(Model):
         self.email = email
 
     def __repr__(self):
-        return '<User %r>' % self.name
-
-
-
+        return "<User %r>" % self.name

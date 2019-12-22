@@ -1,6 +1,7 @@
 [flake8]
 max-line-length = 100
 exclude =
+    create_flask_skeleton/template/*,
     .git,
     .eggs
     __pycache__,
@@ -8,6 +9,6 @@ exclude =
     old,
     build,
     venv,
-    migrations,
+    migrations
 ignore=E131,W503,E203
 
