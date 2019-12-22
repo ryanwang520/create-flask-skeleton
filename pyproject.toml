@@ -8,7 +8,6 @@ include = ["create_flask_skeletion/templates"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pyyaml = "^3.13"
 jinja2 = "^2.10"
 click = "^7.0"
 
@@ -24,6 +23,7 @@ pytest = "^5.3.2"
 voluptuous = "^0.11.7"
 black = "^19.10b0"
 mypy = "^0.761"
+mypy_extensions = "^0.4.3"
 
 [tool.poetry.scripts]
 create-flask-skeleton = 'create_flask_skeleton:main'

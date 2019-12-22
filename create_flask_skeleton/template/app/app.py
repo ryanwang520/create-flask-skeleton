@@ -14,8 +14,8 @@ from werkzeug.utils import redirect
 
 def create_app(config=None):
     config = config or {}
-    app = ApiFlask('{{ app }}')
-    config_path = os.environ['APP_SETTINGS']
+    app = ApiFlask("{{ app }}")
+    config_path = os.environ.get("APP_SETTINGS", "config.yaml")
     with open(config_path) as f:
         config.update(yaml.load(f))
     app.config.update(config)
@@ -39,16 +39,18 @@ def create_normal_app():
 
 def register_blueprints(app):
     from .apps.admin import bp as admin
+
     app.register_blueprint(admin)
     from .apps.user import bp as user
+
     app.register_blueprint(user)
 
 
 def register_error_handlers(app):
     def wants_json_response():
         return (
-                request.accept_mimetypes["application/json"]
-                >= request.accept_mimetypes["text/html"]
+            request.accept_mimetypes["application/json"]
+            >= request.accept_mimetypes["text/html"]
         )
 
     app.register_error_handler(ApiException, lambda err: err.to_result())

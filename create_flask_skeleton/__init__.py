@@ -28,7 +28,7 @@ def main(version, name):
 def mkdirs(name, dir_paths):
     if os.path.exists(name):
         click.echo(
-            "The directory {name} already exists, try using a new directory name"
+            f"The directory {name} already exists, try using a new directory name"
         )
         sys.exit(1)
     root_dir = os.path.join(os.getcwd(), name)
@@ -76,7 +76,7 @@ def cd(newdir):
         os.chdir(prevdir)
 
 
-def install_packages(name, version):
+def install_packages(name):
     with cd(name):
         if os.system("poetry > /dev/null 2>&1") != 0:
             os.system("pip install poetry")
@@ -84,7 +84,7 @@ def install_packages(name, version):
     click.echo("Install requirements successfully")
     click.echo(
         f"Now cd to {name} directory and run `poetry run flask run` to start development,"
-        " you may need to run `poetry run flask run initdb` to get a initial sqlite database setup"
+        " you may need to run `poetry run flask db init` to get a initial sqlite database setup"
         ""
     )
 
@@ -98,7 +98,7 @@ def get_package_name(name):
 
 def bootstrap(name):
     if not package_pattern.match(name):
-        click.echo("Can not create package based on name {name}")
+        click.echo(f"Can not create package based on name {name}")
         sys.exit(2)
     templates_path = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "template")
@@ -110,7 +110,7 @@ def bootstrap(name):
         for f in files:
             file_paths.append(os.path.join(root_path, f))
         if root != templates_path:
-            dir_paths.append(root.replace("{templates_path}/", ""))
+            dir_paths.append(root.replace(f"{templates_path}/", ""))
     mkdirs(name, dir_paths)
     copy_files(name, file_paths, templates_path)
     install_packages(name)
