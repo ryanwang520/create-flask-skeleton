@@ -1,9 +1,31 @@
 [tool.poetry]
 name = "create-flask-skeleton"
-version = "0.1.1"
-description = ""
+version = "0.1.3"
+description = "Quick bootstrap A Flask Project"
 authors = ["Ryan Wang <hwwangwang@gmail.com>"]
 include = ["create_flask_skeletion/templates"]
+license = "MIT"
+
+homepage = "https://github.com/moonshadow/create-flask-skeleton/"
+repository = "https://github.com/moonshadow/create-flask-skeleton/"
+documentation = "https://github.com/moonshadow/create-flask-skeleton/"
+
+readme = "README.md"
+
+
+classifiers = [
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python',
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
+          'Environment :: Web Environment',
+          'Intended Audience :: Developers',
+          'Topic :: Software Development',
+          'Topic :: Software Development :: Libraries',
+]
+
+
 
 
 [tool.poetry.dependencies]

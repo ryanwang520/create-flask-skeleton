@@ -1,6 +1,8 @@
 import importlib
 import os
-import yaml
+from yaml import load
+from yaml import CLoader as Loader
+
 import logging
 import traceback
 from flask import request
@@ -17,7 +19,7 @@ def create_app(config=None):
     app = ApiFlask("{{ app }}")
     config_path = os.environ.get("APP_SETTINGS", "config.yaml")
     with open(config_path) as f:
-        config.update(yaml.load(f))
+        config.update(load(f, Loader=Loader))
     app.config.update(config)
 
     register_blueprints(app)
