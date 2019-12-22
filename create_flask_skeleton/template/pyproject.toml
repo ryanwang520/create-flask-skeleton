@@ -12,24 +12,23 @@ flask = "^1.0"
 pyjwt = "^1.7"
 flask_sqlalchemy = "^2.3"
 flask_migrate = "^2.3"
-mypy_extensions = "^0.4.1"
 python-dotenv = "^0.10.1"
 ipython = "^7.2"
 pyyaml = "^3.13"
-voluptuous = "^0.11.5"
+voluptuous = "^0.11.7"
 
 
 [tool.poetry.dev-dependencies]
-pytest = "^4.2"
-flake8 = "^3.6"
-black = {version = "^18.3-alpha.0",allows-prereleases = true}
-mypy = "^0.660"
+pytest = "^5.3.2"
+flake8 = "^3.7"
 fabric = "^2.4"
-sqlalchemy-stubs = { git = "https://github.com/dropbox/sqlalchemy-stubs.git", branch = "master" }
+sqlalchemy-stubs = "^0.3.0"
+black = "^19.10b0"
+mypy = "^0.761"
 
 
 [tool.black]
-py36 = true
+target-version = ['py37', 'py38']
 exclude = '''
 /(
     \.git
@@ -43,6 +42,7 @@ exclude = '''
   | dist
 )/
 '''
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

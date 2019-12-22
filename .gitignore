@@ -100,3 +100,4 @@ ENV/
 config.yaml
 sample
 poetry.lock
+.DS_Store

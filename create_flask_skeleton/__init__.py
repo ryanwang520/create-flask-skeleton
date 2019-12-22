@@ -7,29 +7,29 @@ import sys
 import click
 from jinja2 import Template
 
-TEMPLATE_NAME = 'app'
+TEMPLATE_NAME = "app"
 
-__version__ = '0.1.1'
+__version__ = "0.1.2"
 
 
 @click.command()
-@click.option('--version', help='version', is_flag=True)
-@click.option('--two', help='install python2 virtualenv', is_flag=True, default=False)
-@click.argument('name', required=False)
-def main(version, two, name):
+@click.option("--version", help="version", is_flag=True)
+@click.argument("name", required=False)
+def main(version, name):
     if version:
-        click.echo('version {}'.format(__version__))
+        click.echo(f"version {__version__}")
         return
     if not name:
-        click.echo('please give a project name')
+        click.echo("Please give a project name.")
         sys.exit(2)
-    bootstrap(name, version=2 if two else 3)
+    bootstrap(name)
 
 
 def mkdirs(name, dir_paths):
     if os.path.exists(name):
         click.echo(
-            'The directory {} already exists, try using a new directory name'.format(name))
+            "The directory {name} already exists, try using a new directory name"
+        )
         sys.exit(1)
     root_dir = os.path.join(os.getcwd(), name)
     os.mkdir(root_dir)
@@ -37,7 +37,7 @@ def mkdirs(name, dir_paths):
 
     for dir_path in dir_paths:
         if dir_path.startswith(TEMPLATE_NAME):
-            dir_path = package_name + dir_path[len(TEMPLATE_NAME):]
+            dir_path = package_name + dir_path[len(TEMPLATE_NAME) :]
         path = os.path.join(os.getcwd(), name, dir_path)
         os.mkdir(path)
 
@@ -45,22 +45,22 @@ def mkdirs(name, dir_paths):
 def copy_files(name, file_paths, template_path):
     package_name = get_package_name(name)
     for file_path in file_paths:
-        relative_path = file_path.replace(template_path + '/', '')
+        relative_path = file_path.replace(template_path + "/", "")
         if relative_path.startswith(TEMPLATE_NAME):
-            relative_path = package_name + relative_path[len(TEMPLATE_NAME):]
+            relative_path = package_name + relative_path[len(TEMPLATE_NAME) :]
         dest = os.path.join(os.getcwd(), name, relative_path)
 
-        if file_path.endswith('.pyc'):
+        if file_path.endswith(".pyc"):
             continue
         content = replace_template(package_name, file_path)
-        with open(dest, 'w') as f:
+        with open(dest, "w") as f:
             f.write(content)
 
 
 def replace_template(name, file_path):
     with open(file_path) as f:
         content = f.read()
-        if file_path.endswith('.html'):
+        if file_path.endswith(".html"):
             return content
         template = Template(content)
         return template.render(app=name)
@@ -80,27 +80,29 @@ def install_packages(name, version):
     with cd(name):
         if os.system("poetry > /dev/null 2>&1") != 0:
             os.system("pip install poetry")
-        # if version == 2:
-        #     os.system('pipenv --two')
         os.system("poetry install")
-    click.echo("install requirements successfully")
-    click.echo("cd to {} directory and run `poetry run flask run` to start development,"
-               " you may need to run `poetry run flask run` initdb to get a initial sqlite database setup"
-               "".format(name))
+    click.echo("Install requirements successfully")
+    click.echo(
+        f"Now cd to {name} directory and run `poetry run flask run` to start development,"
+        " you may need to run `poetry run flask run initdb` to get a initial sqlite database setup"
+        ""
+    )
 
 
-package_pattern = re.compile('[a-zA-Z][a-zA-Z0-9_\-]+$')
+package_pattern = re.compile("[a-zA-Z][a-zA-Z0-9_-]+$")
 
 
-def get_package_name(name): return name.replace('-', '_')
+def get_package_name(name):
+    return name.replace("-", "_")
 
 
-def bootstrap(name, version):
+def bootstrap(name):
     if not package_pattern.match(name):
-        click.echo('can not create package based on name {}'.format(name))
+        click.echo("Can not create package based on name {name}")
         sys.exit(2)
     templates_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), 'template'))
+        os.path.join(os.path.dirname(__file__), "template")
+    )
     dir_paths = []
     file_paths = []
     for root, dirs, files in os.walk(templates_path):
@@ -108,11 +110,11 @@ def bootstrap(name, version):
         for f in files:
             file_paths.append(os.path.join(root_path, f))
         if root != templates_path:
-            dir_paths.append(root.replace('{}/'.format(templates_path), ''))
+            dir_paths.append(root.replace("{templates_path}/", ""))
     mkdirs(name, dir_paths)
     copy_files(name, file_paths, templates_path)
-    install_packages(name, version)
+    install_packages(name)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,14 +1,21 @@
 # create-flask-skeleton
 
-🔥 Quick bootstrap your flask project with highly opinioned presets.
+Quick bootstrap A new flask project.
 
-# only support python3.7 and above
+- 🔥 Minimal boilerplate
+- 🐍 Modern Python Toolchain (Black, Flake8, Mypy, Pytest)
+- 🎗 CORS support on the fly
+- 🔧 Basic JWT auth with different audience
+- 💽 Data Validation by Volupulous
 
-## install from pypi
+
+## Only python3.7 and above are supported.
+
+## Install
 
     pip3 install create-flask-skeleton
 
-## quick start a flask project
+## Quick start a flask project
 
     create-flask-skeleton yourappname
 
