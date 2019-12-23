@@ -24,7 +24,7 @@ def create_app(config=None):
 
     register_blueprints(app)
     db.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app, db)
     init_shell(app)
 
     register_error_handlers(app)
