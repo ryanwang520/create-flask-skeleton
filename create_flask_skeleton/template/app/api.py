@@ -5,8 +5,6 @@ from flask_sqlalchemy import Pagination
 from typing import Optional, List
 
 from mypy_extensions import TypedDict
-
-from .cors import append_cors_header
 from voluptuous import Schema, Invalid
 
 
@@ -90,7 +88,6 @@ class ApiFlask(Flask):
             response = rv.to_response()
         else:
             response = super(ApiFlask, self).make_response(rv)
-        append_cors_header(response)
         return response
 
 

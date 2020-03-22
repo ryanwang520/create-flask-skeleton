@@ -9,9 +9,8 @@ from flask import request
 
 from .api import ApiException, ApiFlask
 from .globals import db, migrate
-from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
-from werkzeug.routing import RequestRedirect
-from werkzeug.utils import redirect
+from .cors import append_cors_header
+from werkzeug.exceptions import HTTPException
 
 
 def create_app(config=None):
@@ -21,6 +20,8 @@ def create_app(config=None):
     with open(config_path) as f:
         config.update(load(f, Loader=Loader))
     app.config.update(config)
+
+    app.after_request(append_cors_header)
 
     register_blueprints(app)
     db.init_app(app)
@@ -60,23 +61,13 @@ def register_error_handlers(app):
     logger = logging.getLogger(__name__)
 
     def handle_err(e):
+        if isinstance(e, HTTPException):
+            return e
         if wants_json_response():
-            if isinstance(e, BadRequest):
-                return ApiException(e.description).to_result()
-            if isinstance(e, NotFound):
-                return ApiException("Not Found", status=404).to_result()
-            if isinstance(e, MethodNotAllowed):
-                return ApiException("method not allowed", status=405).to_result()
             logger.exception("系统异常")
             if app.debug:
                 return ApiException(traceback.format_exc(), status=500).to_result()
             return ApiException("系统异常", status=500).to_result()
-        if isinstance(e, NotFound):
-            return "resource not found", 404
-        if isinstance(e, MethodNotAllowed):
-            return "method not allowed", 405
-        if isinstance(e, RequestRedirect):
-            return redirect(e.new_url)
         raise e
 
     app.register_error_handler(Exception, handle_err)
