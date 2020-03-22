@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "create-flask-skeleton"
-version = "0.1.4"
+version = "0.1.5"
 description = "Quick bootstrap A Flask Project"
 authors = ["Ryan Wang <hwwangwang@gmail.com>"]
 include = ["create_flask_skeletion/templates"]
