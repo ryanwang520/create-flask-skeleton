@@ -36,8 +36,9 @@ def append_cors_header(response):
             response.headers.add(
                 "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PATCH, PUT"
             )
+            return response
 
     else:
         # for actual request but not preflight
         # e.g: response.headers.add('Access-Control-Expose-Headers', '')
-        return
+        return response
