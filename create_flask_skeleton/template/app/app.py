@@ -6,6 +6,8 @@ from yaml import CLoader as Loader
 import logging
 import traceback
 from flask import request
+from pathlib import Path
+
 
 from .api import ApiException, ApiFlask
 from .globals import db, migrate
@@ -17,6 +19,10 @@ def create_app(config=None):
     config = config or {}
     app = ApiFlask("{{ app }}")
     config_path = os.environ.get("APP_SETTINGS", "config.yaml")
+    filename = Path(config_path)
+
+    if not os.path.exists(config_path):
+        Path(filename).touch(exist_ok=True)
     with open(config_path) as f:
         config.update(load(f, Loader=Loader))
     app.config.update(config)
