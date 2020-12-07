@@ -6,7 +6,7 @@ Init for a flask app with minimal boilerplate
 1. simple validation
 2. rest api friendly
 3. Basic jwt auth with different audience
-4. Sqalchemy integrated
+4. SQLAlchemy integrated
 
 
 ### install poetry
