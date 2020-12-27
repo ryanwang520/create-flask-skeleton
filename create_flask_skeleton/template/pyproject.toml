@@ -20,7 +20,7 @@ voluptuous = "^0.12.0"
 
 [tool.poetry.dev-dependencies]
 mypy_extensions = "^0.4.3"
-pytest = "^5.3.2"
+pytest = "^6.0.0"
 flake8 = "^3.7"
 fabric = "^2.4"
 sqlalchemy-stubs = "^0.3.0"
