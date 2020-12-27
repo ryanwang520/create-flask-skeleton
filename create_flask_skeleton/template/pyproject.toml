@@ -9,7 +9,7 @@ include = ["{{ app }}/templates/", "{{ app }}/static/"]
 [tool.poetry.dependencies]
 python = "^3.7"
 flask = "^1.0"
-pyjwt = "^1.7"
+pyjwt = "^2.0"
 flask_sqlalchemy = "^2.3"
 flask_migrate = "^2.3"
 python-dotenv = "^0.15.0"
