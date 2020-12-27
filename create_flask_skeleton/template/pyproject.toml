@@ -15,7 +15,7 @@ flask_migrate = "^2.3"
 python-dotenv = "^0.15.0"
 ipython = "^7.2"
 pyyaml = "^5.2"
-voluptuous = "^0.11.7"
+voluptuous = "^0.12.0"
 
 
 [tool.poetry.dev-dependencies]
